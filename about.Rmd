@@ -1,0 +1,17 @@
+---
+output: 
+    html_document:
+        theme: null
+        highlight: null
+        mathjax: null
+---
+
+
+## About us
+
+....
+
+
+  <div class="well">
+  Design and developed by Hamze Dokoohaki - hamzed@iastate.edu
+  </div>

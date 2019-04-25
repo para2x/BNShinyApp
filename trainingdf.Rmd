@@ -1,0 +1,79 @@
+---
+output: 
+    html_document:
+        theme: null
+        highlight: null
+        mathjax: null
+---
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyr)
+library(dplyr)
+library(highcharter)
+df<-read.csv("../../BN/MI_data.csv")
+
+df<-as.data.frame(apply(df,2,as.numeric))
+```
+
+<div class="panel panel-default">
+  <div class="panel-heading">Training dataset</div>
+  <div class="panel-body">
+  Training dataset was gathered by .... et al.(2013) and it contains information collected from 87 studies from all over the world. 
+  </div>
+</div>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">Soil properties</div>
+  <div class="panel-body" align="center">
+   
+```{r, echo=FALSE, message=FALSE, warning=FALSE,fig.width=9, fig.height=6}
+df$silt<-df$silt*100
+df$sand<-df$sand*100
+df$clay<-df$clay*100
+
+tidyrdf<-df%>%gather(Parameter,value)
+
+tidyrdf2<-tidyrdf%>%filter(Parameter%in%c("CEC","clay","sand","silt","Soil.Organic.Carbon","Soil_PH"))
+
+highchart() %>%  
+  hc_add_series_boxplot(tidyrdf2$value,tidyrdf2$Parameter,
+                        name = "Soil Parameters", fillColor  = "#336699", outliers = FALSE,linewidth=2)%>%
+  hc_xAxis(categories = c("CEC (C mol/kg)","Clay(%)","Sand(%)","Silt(%)","Organic carbon (g/kg)","pH"),
+             labels = list(style = list(fontSize = "15px")))
+
+```
+
+
+  </div>
+</div>
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading">Biochar properties</div>
+  <div class="panel-body" align="center">
+   
+```{r, echo=FALSE, message=FALSE, warning=FALSE,fig.width=9, fig.height=6}
+
+df$Biochar.carbon<-df$Biochar.carbon*100
+df$Biochar.Nitrogen<-df$Biochar.Nitrogen*100
+df$Biochar.Ash<-df$Biochar.Ash*100
+
+tidyrdf<-df%>%gather(Parameter,value)
+#p <- tidyrdf%>%filter(Parameter%in%c("BApplication","biochar_pH","Biochar.carbon","Biochar.#Nitrogen","Biochar.Ash"))%>% ggplot(aes(factor(Parameter), value,fill=Parameter))
+
+#p<-p + geom_boxplot()+ theme_light(base_size = 15)+
+#  scale_x_discrete(labels = c("Application rate (t/ha)","Ash (%)","Carbon(%)","Nitrogen(%)","pH"))+
+#  theme(legend.position = "none")
+
+
+#(gg <- ggplotly(p))
+
+```
+
+
+  </div>
+</div>
+
+
+  <div class="well">
+  Design and developed by Hamze Dokoohaki - hamzed@iastate.edu
+  </div>
