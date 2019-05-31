@@ -1,9 +1,0 @@
-
----
-title: "Leaflet Map"
-output: html_document
----
-
-```{r, echo=FALSE}
-mymap() %>% myfun()
-```

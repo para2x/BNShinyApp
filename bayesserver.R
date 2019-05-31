@@ -1,8 +1,6 @@
 # TODO update the following path
-jarPath <- 'bayesserver-7.6.jar'
-
-library(rJava) #load the rJava library
-.jinit(classpath=c(jarPath,"mysql-connector-java-5.1.39-bin.jar"))
+jarPath <- '../bayesserver-7.6.jar'
+.jinit(classpath=c(jarPath))
 
 Double <- J("java.lang.Double")
 Stringg <- J("java.lang.String")
@@ -26,7 +24,7 @@ ReaderOptions<-J("com.bayesserver.data.ReaderOptions")
 ArrayasList<-J("java.util.Arrays")
 DataTable<-J("com.bayesserver.data.DataTable")
 DataRow<-J("com.bayesserver.data.DataRow")
-MySQLI<-J("com.mysql.jdbc.Driver")
+
 Evidence<-J("com.bayesserver.inference.Evidence")
 CLGaussian <- J("com.bayesserver.CLGaussian")
 

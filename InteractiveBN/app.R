@@ -9,7 +9,10 @@
 
 library(shiny)
 library(highcharter)
-
+library(rJava)
+library(dplyr)
+source('../UtilFuncs.R')$value
+source('../bayesserver.R')$value
 # Define UI for application that draws a histogram
 ui <- fluidPage(
   br(),
@@ -94,9 +97,8 @@ fluidRow(column(6,      h4("Soil"),
       mainPanel(width = 8,
 
         fluidRow(
-          column(12,wellPanel( highchartOutput("hcontainer",height = "auto"))),
-          column(12,wellPanel( 
-            fluidRow(highchartOutput("compplot",height = "auto")))
+          column(12,
+            fluidRow(highchartOutput("compplot",height = "600px"))
             
           ))
       )
@@ -105,7 +107,109 @@ fluidRow(column(6,      h4("Soil"),
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-   
+  values <- reactiveValues(networkg=NULL,
+                           compdf=data.frame(mRR=numeric(0),varRR=numeric(0),PRR=numeric(0),name=character(0)),
+                           lRRvar=NULL,lmRR=NULL,lPRR=NULL)
+  
+  values$networkG<-buildnet()
+  
+  observeEvent(input$addev,{
+       
+    #Check the inputs
+    if(
+       is.na(as.numeric(input$BCN))&is.na(as.numeric(input$SpH)) & is.na(as.numeric(input$CEC)) & is.na(as.numeric(input$SOC)) &
+       is.na(as.numeric(input$BpH))&is.na(as.numeric(input$HT))&
+       is.na(as.numeric(input$BC))&
+       is.null(values$networkg))
+      return(NULL)
+    
+    
+     tryCatch({
+
+      withProgress(message = 'Calculation in progress',
+                   detail = 'This may take a while...',
+                   value = 0,{
+                   
+                     #.... some operation here
+                     incProgress(1 / 15) # As we move forward with our calc let's increase this
+                     res<-quary.BN( values$networkG,
+                                    as.numeric(input$Sand)/100, as.numeric(input$Silt)/100, as.numeric(input$Clay)/100, as.numeric(input$SOC),
+                                    as.numeric(input$SpH),  as.numeric(input$CEC),  NA,  NA,
+                                    NA,  as.numeric(input$BpH),  as.numeric(input$HT),   as.numeric(input$BC),
+                                    NA,   NA,   as.numeric(input$BCN),"1", "1","1"
+                     )
+
+                     ################ reprintin the result
+                     ### keeping the vakues in the global for the chart
+                     values$lmRR=round(res[[1]],2)
+                     values$lRRvar=round(res[[2]],2)
+                     values$lPRR=round(pnorm(0,res[[1]],sqrt(res[[2]]),lower.tail =F),2)
+                     
+                 
+                     values$compdf<-rbind(values$compdf,
+                                          data.frame(`Mean Response`=values$lmRR,
+                                                     `Variance`=values$lRRvar,
+                                                     `Probability`=values$lPRR,
+                                                     name=input$seriesname))
+                     
+                     output$compplot<-renderHighchart({
+                       hc<-highchart() %>% 
+                         hc_chart(type = "column") %>% 
+                         hc_title(text = "Comparison chart") %>% 
+                         hc_xAxis(categories = names(values$compdf),
+                                  labels = list(style = list(fontSize = "15px")))%>% 
+                         
+                         hc_yAxis(max=1, lineWidth=0,labels = list(style = list(fontSize = "15px")),
+                                   title = list(text = "value",style = list(fontSize = "15px")))%>%
+                         hc_exporting(enabled = TRUE) # enable exporting option
+                       
+                       for(i in 1:nrow(values$compdf)){
+                         
+                         hc<-hc %>% 
+                           hc_add_series(data = as.numeric(values$compdf[i,1:3]),name = values$compdf[i,4])
+                       }
+                       hc %>%
+                         hc_add_theme(hc_theme_elementary(yAxis = list(gridLineColor ="#9a9d9e",title = list(style = list(fontSize=17)),
+                                                                       labels = list(style = list(fontSize=17))),
+                                                          xAxis = list(gridLineColor ="#9a9d9e",title = list(style = list(fontSize=17)),
+                                                                       labels = list(style = list(fontSize=17)))
+                         ))
+                       
+                     })
+                     
+                     output$mRR<-renderPrint({
+                       cat("RR mean = ", values$lmRR)
+                     })
+                     output$varRR<-renderPrint({
+                       cat("RR variance = ", values$lRRvar)
+                     })
+                     output$pRR<-renderPrint({
+                       cat("P( RR>0 | ... ) = ",values$lPRR)
+                     })
+                   })
+      #Signaling the success of the operation
+    
+    },
+    error = function(e) {
+      showModal(modalDialog(
+        title = "Error",
+        conditionMessage(e)
+      ))
+
+    })
+
+  }) 
+  
+  #Reset button
+  observeEvent(input$resetbtn,{
+    values$compdf<-NULL
+    output$compplot<-renderHighchart({
+      hc<-highchart() 
+      hc
+      
+    })
+    
+  })
 
 }
 
