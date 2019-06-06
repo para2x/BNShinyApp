@@ -1,5 +1,5 @@
 # TODO update the following path
-jarPath <- '../bayesserver-7.6.jar'
+jarPath <- 'bayesserver-7.6.jar'
 .jinit(classpath=c(jarPath))
 
 Double <- J("java.lang.Double")
