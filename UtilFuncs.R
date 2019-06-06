@@ -1,8 +1,17 @@
 buildnet<-function(){
+  tryCatch({
   network <- new(Network, "Demo")
   #### importing the network
   network$loadFromString(readLines("networkdata.txt", n = -1))
   return(network)
+  },
+  error = function(e) {
+    showModal(modalDialog(
+      title = "Error",
+      conditionMessage(e)
+    ))
+    
+  })
 }
 
 quary.BN<-function(network,sandv=NA,siltv=NA,clayv=NA,socv=NA,soilpHv=NA,cecv=NA,latv=NA,
