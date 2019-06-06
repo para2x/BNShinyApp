@@ -1,6 +1,6 @@
 # TODO update the following path
 jarPath <- 'bayesserver-7.6.jar'
-.jinit(classpath=c(jarPath),"--add-modules=java.xml.bind XmlTestClass")
+.jinit(classpath=c(jarPath),"--add-modules=java.xml.bind")
 
 Double <- J("java.lang.Double")
 Stringg <- J("java.lang.String")
