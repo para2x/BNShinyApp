@@ -112,7 +112,7 @@ server <- function(input, output) {
                            compdf=data.frame(mRR=numeric(0),varRR=numeric(0),PRR=numeric(0),name=character(0)),
                            lRRvar=NULL,lmRR=NULL,lPRR=NULL)
   
-  values$networkG<-buildnet()
+  #values$networkG<-buildnet()
   
   observeEvent(input$addev,{
        
