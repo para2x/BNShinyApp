@@ -11,8 +11,8 @@ library(shiny)
 library(highcharter)
 library(rJava)
 library(dplyr)
-source('../UtilFuncs.R')$value
-source('../bayesserver.R')$value
+source('UtilFuncs.R')$value
+source('bayesserver.R')$value
 options(shiny.trace = TRUE)
 # Define UI for application that draws a histogram
 ui <- fluidPage(

@@ -1,7 +1,7 @@
 buildnet<-function(){
   network <- new(Network, "Demo")
   #### importing the network
-  network$loadFromString(readLines("../networkdata.txt", n = -1))
+  network$loadFromString(readLines("networkdata.txt", n = -1))
   return(network)
 }
 
