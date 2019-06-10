@@ -6,11 +6,13 @@
 #
 #    http://shiny.rstudio.com/
 #
+suppressPackageStartupMessages({
+  library(shiny)
+  library(highcharter)
+  library(rJava)
+  library(dplyr)
+})
 
-library(shiny)
-library(highcharter)
-library(rJava)
-library(dplyr)
 source('UtilFuncs.R')$value
 source('bayesserver.R')$value
 options(shiny.trace = TRUE)
@@ -19,7 +21,7 @@ ui <- fluidPage(
   br(),
    # Sidebar with a slider input for number of bins 
    sidebarLayout(
-      sidebarPanel(width = 4,
+      sidebarPanel(width = 3,
 # 
 #         fluidRow(
 #           column(12,
@@ -95,7 +97,7 @@ fluidRow(column(6,      h4("Soil"),
       ),
       
       # Show a plot of the generated distribution
-      mainPanel(width = 8,
+      mainPanel(width = 9,
 
         fluidRow(
           column(12,
