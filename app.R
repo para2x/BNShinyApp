@@ -21,7 +21,7 @@ ui <- fluidPage(
   br(),
    # Sidebar with a slider input for number of bins 
    sidebarLayout(
-      sidebarPanel(width = 3,
+      sidebarPanel(width = 1,
 # 
 #         fluidRow(
 #           column(12,
@@ -97,7 +97,7 @@ fluidRow(column(6,      h4("Soil"),
       ),
       
       # Show a plot of the generated distribution
-      mainPanel(width = 9,
+      mainPanel(width = 11,
 
         fluidRow(
           column(12,
