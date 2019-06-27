@@ -32,7 +32,7 @@ ui <- fluidPage(
 #           ))),
 fluidRow(column(6,      h4("Soil"),
                 fluidRow(column(
-                  12,
+                  6,
                   wellPanel(
                     textInput("SpH", label = h5("Soil pH"), value = ""),
                     textInput("CEC", label = h5("CEC"), value = ""),
@@ -62,24 +62,25 @@ fluidRow(column(6,      h4("Soil"),
                     
                     
                   )
-                ))),
-         column(6,        h4("Biochar"),
-                fluidRow(column(
-                  12, wellPanel(
-                    textInput("BpH", label = h5("Biochar pH "), value = ""),
-                    textInput(
-                      "HT",
-                      label = h5("Highest temperature "),
-                      value = ""
-                    ),
-                    textInput("BC", label = h5("Biochar C "), value = ""),
-                    textInput("BCN", label = h5(" Biochar C/N"), value = "")
-                  ),
-                  h4("Add to chart"),
-                  textInput("seriesname", label = h5(""), value = "Series name"),
-                  actionButton("addev", label = "Add", class="btn btn-success btn-block"),br(),
-                  actionButton("resetbtn", label = "Reset !", class="btn btn-danger btn-block")
-                ))))
+                ),
+                column(6,        h4("Biochar"),
+                       fluidRow(column(
+                         12, wellPanel(
+                           textInput("BpH", label = h5("Biochar pH "), value = ""),
+                           textInput(
+                             "HT",
+                             label = h5("Highest temperature "),
+                             value = ""
+                           ),
+                           textInput("BC", label = h5("Biochar C "), value = ""),
+                           textInput("BCN", label = h5(" Biochar C/N"), value = "")
+                         ),
+                         h4("Add to chart"),
+                         textInput("seriesname", label = h5(""), value = "Series name"),
+                         actionButton("addev", label = "Add", class="btn btn-success btn-block"),br(),
+                         actionButton("resetbtn", label = "Reset !", class="btn btn-danger btn-block")
+                       )))))
+)
 
 
         # fluidRow( column(12, wellPanel(
