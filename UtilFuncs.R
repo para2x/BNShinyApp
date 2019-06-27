@@ -2,7 +2,7 @@ buildnet<-function(){
   tryCatch({
   network <- new(Network, "Demo")
   #### importing the network
-  network$loadFromString(readLines("../BNcoef/networkdata.txt", n = -1))
+  network$loadFromString(readLines("../BNcoefs/networkdata.txt", n = -1))
   return(network)
   },
   error = function(e) {
