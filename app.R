@@ -35,25 +35,25 @@ fluidRow(column(6,      h4("Soil"),
                   6,
                   wellPanel(
                     textInput("SpH", label = h5("Soil pH"), value = ""),
-                    textInput("CEC", label = h5("CEC"), value = ""),
-                    textInput("SOC", label = h5("SOC"), value = ""),
+                    textInput("CEC", label = h5("CEC (cmolc/kg)"), value = ""),
+                    textInput("SOC", label = h5("SOC (%) "), value = ""),
                     sliderInput(
                       "Sand",
-                      label = h5("Sand"),
+                      label = h5("Sand (%) "),
                       min = 0,
                       max = 100,
                       value = 50
                     ),
                     sliderInput(
                       "Silt",
-                      label = h5("Silt"),
+                      label = h5("Silt (%) "),
                       min = 0,
                       max = 100,
                       value = 30
                     ),
                     sliderInput(
                       "Clay",
-                      label = h5("Clay"),
+                      label = h5("Clay (%) "),
                       min = 0,
                       value = 20,
                       max = 100
@@ -69,10 +69,10 @@ fluidRow(column(6,      h4("Soil"),
                            textInput("BpH", label = h5("Biochar pH "), value = ""),
                            textInput(
                              "HT",
-                             label = h5("Highest temperature "),
+                             label = h5("Highest temperature  (C) "),
                              value = ""
                            ),
-                           textInput("BC", label = h5("Biochar C "), value = ""),
+                           textInput("BC", label = h5("Biochar C  (%) "), value = ""),
                            textInput("BCN", label = h5(" Biochar C/N"), value = "")
                          ),
                          h4("Add to chart"),
