@@ -77,8 +77,8 @@ fluidRow(column(6,      h4("Soil"),
                          ),
                          h4("Add to chart"),
                          textInput("seriesname", label = h5(""), value = "Series name"),
-                         actionButton("addev", label = "Add", class="btn btn-success btn-block"),br(),
-                         actionButton("resetbtn", label = "Reset !", class="btn btn-danger btn-block")
+                         actionButton("addev", label = "Predict !", class="btn btn-success btn-block"),br(),
+                         actionButton("resetbtn", label = "Reset", class="btn btn-danger btn-block")
                        )))))
 )
 
